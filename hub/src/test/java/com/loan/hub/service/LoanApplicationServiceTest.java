@@ -6,7 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.loan.hub.domain.dto.LoanApplicationRequest;
 import com.loan.hub.domain.dto.LoanApplicationResponse;
@@ -15,10 +18,22 @@ import com.loan.hub.domain.enums.LoanPurpose;
 import com.loan.hub.domain.enums.RiskBand;
 import com.loan.hub.domain.model.Applicant;
 import com.loan.hub.domain.model.Loan;
+import com.loan.hub.repository.LoanApplicationRepository;
 
 public class LoanApplicationServiceTest {
 
-    private final LoanApplicationService service = new LoanApplicationService();
+    @Mock
+    private LoanApplicationRepository repository;
+
+    private LoanApplicationService service;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+        service = new LoanApplicationService(repository);
+    }
+
+    
 
     @Test
     void shouldReturnLowRisk() {

@@ -7,11 +7,14 @@ import com.loan.hub.domain.dto.LoanApplicationResponse;
 import com.loan.hub.domain.enums.RiskBand;
 import com.loan.hub.domain.model.Applicant;
 import com.loan.hub.domain.model.Loan;
+import com.loan.hub.repository.LoanApplicationRepository;
+import com.loan.hub.repository.entity.LoanApplicationEntity;
 import com.loan.hub.util.EmiCalculator;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +26,12 @@ import com.loan.hub.domain.dto.Offer;
 @Slf4j
 @Service
 public class LoanApplicationService {
+
+    private final LoanApplicationRepository repository;
+
+    public LoanApplicationService(LoanApplicationRepository repository) {
+        this.repository = repository;
+    }
 
     public LoanApplicationResponse process(LoanApplicationRequest request) {
     
@@ -119,6 +128,14 @@ public class LoanApplicationService {
         response.setRiskBand(null);
         response.setRejectionReasons(reasons);
 
+        LoanApplicationEntity entity = new LoanApplicationEntity();
+        entity.setApplicationId(response.getApplicationId());
+        entity.setStatus("REJECTED");
+        entity.setRejectionReasons(String.join(",", reasons));
+        entity.setCreatedAt(LocalDateTime.now());
+
+        repository.save(entity);
+
         return response;
     }
     private LoanApplicationResponse buildApprovedResponse(RiskBand riskBand,
@@ -140,6 +157,16 @@ public class LoanApplicationService {
         response.setRiskBand(riskBand);
         response.setOffer(offer);
 
+        LoanApplicationEntity entity = new LoanApplicationEntity();
+        entity.setApplicationId(response.getApplicationId());
+        entity.setStatus("APPROVED");
+        entity.setRiskBand(riskBand.name());
+        entity.setEmi(emi);
+        entity.setIntrestRate(interestRate);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
+
+repository.save(entity);
         return response;
     }
 }
