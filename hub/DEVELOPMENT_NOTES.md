@@ -83,7 +83,6 @@ Final interest rate includes:
 ## 5. Trade-offs
 
 * Did not introduce database persistence to keep the solution simple and focused
-* Did not use advanced patterns (e.g., strategy pattern) to avoid overengineering
 * Combined some logic within service layer for readability
 
 ---
@@ -91,10 +90,10 @@ Final interest rate includes:
 ## 6. Improvements (Given More Time)
 
 * Add persistence layer for audit storage
-* Introduce unit and integration tests
+* Introduce integration tests
 * Add API documentation (Swagger/OpenAPI)
 * Improve validation error structure (field-wise response)
-* Externalize configuration (interest rates, thresholds)
+
 
 ---
 
