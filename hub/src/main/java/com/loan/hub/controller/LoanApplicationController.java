@@ -30,7 +30,7 @@ public class LoanApplicationController {
      * Accepts loan application and returns approval or rejection.
      */
     @PostMapping("/applications")
-    public ResponseEntity<LoanApplicationRequest> applyApplication(
+    public ResponseEntity<LoanApplicationResponse> applyApplication(
         @Valid @RequestBody LoanApplicationRequest request) {
            log.info("Received loan application for applicant: {}",
                 request.getApplicant().getName());
@@ -40,7 +40,7 @@ public class LoanApplicationController {
         log.info("Application processed with status: {}",
                 response.getStatus());
         
-        return ResponseEntity.ok(request);
+        return ResponseEntity.ok(response);
     }
     
 
