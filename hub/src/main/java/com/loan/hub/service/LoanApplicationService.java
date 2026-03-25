@@ -60,21 +60,16 @@ public class LoanApplicationService {
             loan.getTenureMonths()
     );
 
-    // Rule 3: EMI > 60% income
+   // Rule 3 & 4: EMI thresholds (priority logic)
     BigDecimal sixtyPercentIncome = applicant.getMonthlyIncome()
             .multiply(BigDecimal.valueOf(0.6));
 
-    if (emi.compareTo(sixtyPercentIncome) > 0) {
-        log.debug("Rejected due to EMI > 60% income");
-        rejectionReasons.add("EMI_EXCEEDS_60_PERCENT");
-    }
-
-    // Rule 4: EMI > 50% income (offer validity rule)
     BigDecimal fiftyPercentIncome = applicant.getMonthlyIncome()
             .multiply(BigDecimal.valueOf(0.5));
 
-    if (emi.compareTo(fiftyPercentIncome) > 0) {
-        log.debug("Rejected due to EMI > 50% income");
+    if (emi.compareTo(sixtyPercentIncome) > 0) {
+        rejectionReasons.add("EMI_EXCEEDS_60_PERCENT");
+    } else if (emi.compareTo(fiftyPercentIncome) > 0) {
         rejectionReasons.add("EMI_EXCEEDS_50_PERCENT");
     }
 

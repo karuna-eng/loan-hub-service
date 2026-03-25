@@ -35,7 +35,7 @@ public class LoanApplicationServiceTest {
     assertEquals(RiskBand.HIGH, service.getRiskBand(620));
     }
 
-    // ✅ Approval Test
+    // Approval Test
     @Test
     void shouldApproveLoanApplication() {
 
@@ -47,7 +47,7 @@ public class LoanApplicationServiceTest {
         assertNotNull(response.getOffer());
     }
 
-    // ✅ Rejection Test
+    // Rejection Test
     @Test
     void shouldRejectForLowCreditScore() {
 
@@ -59,7 +59,7 @@ public class LoanApplicationServiceTest {
         assertTrue(response.getRejectionReasons().contains("LOW_CREDIT_SCORE"));
     }
 
-    // 🔹 Helper Methods
+    //Helper Methods
 
     private LoanApplicationRequest buildValidRequest() {
 
