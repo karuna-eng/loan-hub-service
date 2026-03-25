@@ -4,7 +4,7 @@ server:
 logging:
   level:
     root: INFO
-    com.yourcompany.hub: DEBUG
+    com.loan.hub: DEBUG
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
