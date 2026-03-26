@@ -32,7 +32,8 @@ Financial calculations (EMI, interest) use BigDecimal to ensure precision and av
 ### Validation Strategy
 
 Used Jakarta Bean Validation annotations to enforce input constraints and a global exception handler to return consistent error responses.
-
+### Important Note 
+To keep the model type-safe, enums were used for fields like employmentType and purpose. This results in fail-fast validation during deserialization. If multiple error reporting is required, input can be accepted as String and validated manually.
 ### Logging
 
 Used structured logging to trace request processing and outcomes.
@@ -82,18 +83,16 @@ Final interest rate includes:
 
 ## 5. Trade-offs
 
-* Did not introduce database persistence to keep the solution simple and focused
 * Combined some logic within service layer for readability
 
 ---
 
 ## 6. Improvements (Given More Time)
 
-* Add persistence layer for audit storage
 * Introduce integration tests
 * Add API documentation (Swagger/OpenAPI)
 * Improve validation error structure (field-wise response)
-
+ Security (e.g., authentication and authorization) was not implemented as it was not part of the core requirements. In a production system, I would secure APIs using Spring Security with JWT or OAuth2.
 
 ---
 

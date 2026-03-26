@@ -16,19 +16,21 @@ public class Applicant {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @Min(value = 21, message = "Age must be at least 21")
-    @Max(value = 60, message = "Age must not exceed 60")
+    @NotNull(message = "Age is required")
+    @Min(value = 21, message = "Age must be between 21–60")
+    @Max(value = 60, message = "Age must be between 21–60")
     private Integer age;
 
     @NotNull(message = "Monthly income is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Income must be greater than 0")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Monthly income must be greater than 0")
     private BigDecimal monthlyIncome;
 
     @NotNull(message = "Employment type is required")
     private EmploymentType employmentType;
 
-    @Min(value = 300, message = "Credit score must be >= 300")
-    @Max(value = 900, message = "Credit score must be <= 900")
+    @NotNull(message = "Credit score is required")
+    @Min(value = 300, message = "Credit score must be between 300–900")
+    @Max(value = 900, message = "Credit score must be between 300–900")
     private Integer creditScore;
 
 }

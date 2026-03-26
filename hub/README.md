@@ -126,3 +126,116 @@ Future Improvements
     API documentation using Swagger/OpenAPI
     Integration tests
     Configurable business rules
+
+##  Setup & Run Instructions
+
+###  Prerequisites
+
+Make sure the following are installed:
+
+* Java 17+
+* Maven 3.8+
+* VS Code (or any IDE)
+* Git
+
+---
+
+###  Clone Repository
+
+```bash
+git clone https://github.com/karuna-eng/loan-hub-service.git
+cd loan-hub-service
+```
+
+---
+
+###  Build Project
+
+```bash
+mvn clean install
+```
+
+---
+
+###  Run Application
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+###  API Endpoint
+
+```
+POST http://localhost:8080/hub-api/applications
+```
+
+---
+
+###  Test Using Postman
+
+Use the following sample request:
+
+```json
+{
+  "applicant": {
+    "name": "John",
+    "age": 30,
+    "monthlyIncome": 75000,
+    "employmentType": "SALARIED",
+    "creditScore": 720
+  },
+  "loan": {
+    "amount": 500000,
+    "tenureMonths": 36,
+    "purpose": "PERSONAL"
+  }
+}
+```
+
+---
+
+### H2 Database Console (Optional)
+
+Access:
+
+```
+http://localhost:8080/h2-console
+```
+
+Use:
+
+```
+JDBC URL: jdbc:h2:mem:loan-db
+Username: admin
+Password: admin
+```
+
+---
+
+### Run Tests
+
+```bash
+mvn test
+```
+
+---
+
+### Running in VS Code
+
+1. Open project folder in VS Code
+2. Install Java Extension Pack (if not installed)
+3. Open main class (`HubApplication.java`)
+4. Click **Run** button
+5. Use Postman to test APIs
+
+---
+
+### Notes
+
+* Application uses in-memory H2 database
+* Data will reset on restart
+* Ensure port 8080 is free before running
+
+

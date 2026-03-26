@@ -6,7 +6,9 @@ import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+/**
+ * Entity representing a loan application in the database.
+ */
 @Entity
 @Setter
 @Getter
@@ -22,7 +24,7 @@ public class LoanApplicationEntity {
 
     private BigDecimal emi;
 
-    private BigDecimal intrestRate;
+    private BigDecimal interestRate;
 
     private String rejectionReasons;
 
