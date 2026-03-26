@@ -13,19 +13,24 @@ import org.mockito.MockitoAnnotations;
 
 import com.loan.hub.domain.dto.LoanApplicationRequest;
 import com.loan.hub.domain.dto.LoanApplicationResponse;
-import com.loan.hub.domain.enums.EmploymentType;
-import com.loan.hub.domain.enums.LoanPurpose;
-import com.loan.hub.domain.enums.RiskBand;
 import com.loan.hub.domain.model.Applicant;
 import com.loan.hub.domain.model.Loan;
 import com.loan.hub.repository.LoanApplicationRepository;
-
+import com.loan.hub.domain.enums.*;
 public class LoanApplicationServiceTest {
 
     @Mock
     private LoanApplicationRepository repository;
 
     private LoanApplicationService service;
+
+    private static final int LOW_RISK_SCORE = 750;
+    private static final int MEDIUM_RISK_SCORE = 700;
+    private static final int HIGH_RISK_SCORE = 620;
+
+    private static final BigDecimal DEFAULT_INCOME = BigDecimal.valueOf(75000);
+    private static final BigDecimal DEFAULT_LOAN_AMOUNT = BigDecimal.valueOf(500000);
+    private static final int DEFAULT_TENURE = 36;
 
     @BeforeEach
     void setup() {
@@ -37,17 +42,17 @@ public class LoanApplicationServiceTest {
 
     @Test
     void shouldReturnLowRisk() {
-    assertEquals(RiskBand.LOW, service.getRiskBand(750));
+    assertEquals(RiskBand.LOW, service.getRiskBand(LOW_RISK_SCORE));
     }
 
     @Test
     void shouldReturnMediumRisk() {
-    assertEquals(RiskBand.MEDIUM, service.getRiskBand(700));
+    assertEquals(RiskBand.MEDIUM, service.getRiskBand(MEDIUM_RISK_SCORE));
     }
 
     @Test
     void shouldReturnHighRisk() {
-    assertEquals(RiskBand.HIGH, service.getRiskBand(620));
+    assertEquals(RiskBand.HIGH, service.getRiskBand(HIGH_RISK_SCORE));
     }
 
     // Approval Test
@@ -58,7 +63,7 @@ public class LoanApplicationServiceTest {
 
         LoanApplicationResponse response = service.process(request);
 
-        assertEquals("APPROVED", response.getStatus());
+        assertEquals(ApplicationStatus.APPROVED.name(), response.getStatus());
         assertNotNull(response.getOffer());
     }
 
@@ -70,7 +75,7 @@ public class LoanApplicationServiceTest {
 
         LoanApplicationResponse response = service.process(request);
 
-        assertEquals("REJECTED", response.getStatus());
+        assertEquals(ApplicationStatus.REJECTED.name(), response.getStatus());
         assertTrue(response.getRejectionReasons().contains("LOW_CREDIT_SCORE"));
     }
 
@@ -81,13 +86,13 @@ public class LoanApplicationServiceTest {
         Applicant applicant = new Applicant();
         applicant.setName("John");
         applicant.setAge(30);
-        applicant.setMonthlyIncome(BigDecimal.valueOf(75000));
+        applicant.setMonthlyIncome(DEFAULT_INCOME);
         applicant.setEmploymentType(EmploymentType.SALARIED);
         applicant.setCreditScore(720);
 
         Loan loan = new Loan();
-        loan.setAmount(BigDecimal.valueOf(500000));
-        loan.setTenureMonths(36);
+        loan.setAmount(DEFAULT_LOAN_AMOUNT);
+        loan.setTenureMonths(DEFAULT_TENURE);
         loan.setPurpose(LoanPurpose.PERSONAL);
 
         LoanApplicationRequest request = new LoanApplicationRequest();

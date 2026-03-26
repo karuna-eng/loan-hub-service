@@ -18,13 +18,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Loan {
+
     @NotNull(message = "Loan amount is required")
-    @DecimalMin(value = "10000", message = "Minimum loan amount is 10000")
-    @DecimalMax(value = "5000000", message = "Maximum loan amount is 5000000")
+    @DecimalMin(value = "10000", message = "Loan amount must be between 10,000-50,000,000")
+    @DecimalMax(value = "5000000", message = "Loan amount must be between 10,000-50,000,000")
     private BigDecimal amount;
 
-    @Min(value = 6, message = "Minimum tenure is 6 months")
-    @Max(value = 360, message = "Maximum tenure is 360 months")
+    @Min(value = 6, message = "Tenure must be between 6–360 months")
+    @Max(value = 360, message = "Tenure must be between 6–360 months")
     private int tenureMonths;
 
     @NotNull(message = "Loan purpose is required")
